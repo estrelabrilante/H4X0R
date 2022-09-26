@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import WebKit
 
 struct DetailView: View {
     let url : String?
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+       WebView(urlString: url)
     }
 }
 
@@ -18,4 +19,27 @@ struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
         DetailView(url: "https://www.google.com")
     }
+}
+struct WebView: UIViewRepresentable{
+    let urlString: String?
+    //TWO Delegate methods : makeUIView and updateUIView
+    func makeUIView(context: Context) -> WebView.UIViewType {
+        return WKWebView()
+    }
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        //string is not null
+        if let safeString = urlString{
+            if let url = URL(string: safeString){
+                let request = URLRequest(url: url)
+                uiView.load(request)
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
 }
