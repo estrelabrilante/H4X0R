@@ -14,15 +14,18 @@ struct ContentView: View {
         NavigationView{
     //Pass results in network Manager to the List
             List(networkManager.news){
-                post in
-                HStack{
-                    Text(String(post.points))
-                    Text(post.title)}
-            }
+                newS in
+                NavigationLink(destination: DetailView(url: newS.url)) {
+        HStack{
+            Text(String(newS.points))
+            Text(newS.title)}
+                    }
+                }
+                
         .navigationTitle("Hacker News")
         .foregroundColor(.purple)
     }
-        //Trigger func fetchData fromalgolia api when viewload
+        //Trigger Networking(func fetchData) from algolia api when onappear method call
         .onAppear{
             self.networkManager.fetchData()
         }
